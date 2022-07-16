@@ -20,7 +20,7 @@ public class Hand {
             this.hand.set(i, null);
         }
 //            return (this.getHandSum() <= 21);
-        }
+    }
 
     public void addCard (Card aCard){
         if (this.numOfCards < 10) {
@@ -39,6 +39,7 @@ public class Hand {
         return "Too many cards";
     }
 
+
         public int getHandSum () {
             int handSum = 0;
             int cardNum;
@@ -49,6 +50,7 @@ public class Hand {
 
                 if (cardNum == 1) {
                     numAces++;
+
 //                    int aceOrEleven = console.getIntegerInput("Enter 1 or 11 for your Ace value");
 //                    if (aceOrEleven == 11){
 //                        handSum += 11;
@@ -61,6 +63,7 @@ public class Hand {
 //                    handSum += 10;
 //                } else {
 //                    handSum += cardNum;
+
                 } else {
                     handSum += cardNum;
                 }
@@ -75,6 +78,7 @@ public class Hand {
             } else {
                 return handSum + numAces;
             }
+
         } else if(numAces == 1) {
             if(handSum + 11 <= 21){
                 return handSum + 11;
@@ -88,24 +92,24 @@ public class Hand {
 
     public void printHand( boolean showFirstCard){
 //            System.out.println("%'s cards :\n", this.name);
-            for (int i = 0; i < this.numOfCards; i++) {
-                if (i == 0 && !showFirstCard) {
-                    System.out.println("  [hidden]  ");
-                } else {
-                    System.out.printf("   %s\n", this.hand.get(i).toString());
-                }
+        for (int i = 0; i < this.numOfCards; i++) {
+            if (i == 0 && !showFirstCard) {
+                System.out.println("  [hidden]  ");
+            } else {
+                System.out.printf("   %s\n", this.hand.get(i).toString());
             }
-
         }
 
+    }
 
-        public Integer handSize(){
-            return this.hand.size();
-        }
 
-        public List<Card> getCards(){
-            return this.hand;
-        }
+    public Integer handSize(){
+        return this.hand.size();
+    }
+
+    public List<Card> getCards(){
+        return this.hand;
+    }
 
     @Override
     public String toString() {

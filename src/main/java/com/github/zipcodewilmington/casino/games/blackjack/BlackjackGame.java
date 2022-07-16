@@ -8,7 +8,6 @@ import com.github.zipcodewilmington.casino.games.card.deck.Deck;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -16,6 +15,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 
     private static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RED = "\u001B[31m";
+
     private Hand dealersHand = new Hand();
     private Hand playerHand = new Hand();
     private Shoe shoe = new Shoe();
@@ -28,8 +28,13 @@ public class BlackjackGame extends Deck implements GameInterface {
     private boolean dealerWin;
 
 
+
+
     public void add(PlayerInterface player) {
         blackjackPlayer.add((BlackjackPlayer) player);
+        player.getArcadeAccount();
+        this.balance = player.getArcadeAccount().getBalance();
+
 
     }
 
@@ -39,11 +44,13 @@ public class BlackjackGame extends Deck implements GameInterface {
         while(this.isRunning == true){
             System.out.println(ANSI_YELLOW  + "Successfully started game");
 
+
 //            this.setBet();
             this.advanceTurn();
         }
 
         this.checkwinner();
+
 
 //        this.determineWinner();
 //        System.out.println((this.printEndingMessage()));
@@ -60,9 +67,8 @@ public class BlackjackGame extends Deck implements GameInterface {
             //player's code
             Integer userInput = 0;
             while(userInput != 2 && this.isRunning){
-                console.println("Player's Turn. Current Hand:");
-                System.out.println(this.playerHand.toString());
-                System.out.println("Hand value: " + playerHand.getHandSum() + "\n");
+
+
                 userInput = this.console.getIntegerInput("Please enter your choice\n1: Hit\n2: Stand");
                 if(userInput == 1){
                     this.playerHand.addCard(shoe.drawNext());
@@ -70,6 +76,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 
                     this.busted();
                 } else if (userInput == 2) {
+
                     System.out.println("_______Player = 2--------");
                     this.dealersTurn = true;
                     console.println("Dealers Turn. Current Hand:");
@@ -83,6 +90,7 @@ public class BlackjackGame extends Deck implements GameInterface {
                 }
                 //if something stand related needs to happen, set up here?
 //                System.out.println("chose to stand");
+
             }
         }
 
@@ -125,6 +133,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 
     public void busted() {
         if (this.playerHand.getHandSum() > 21) {
+
             System.out.println("you went over 21, and lost your bet ");
             System.out.println(this.playerHand.toString());
             this.dealerWin = true;
@@ -139,6 +148,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 
     public void blackjack(){
     }
+
 
 //    public Scanner setBet(){
 //
@@ -157,6 +167,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 //
 //    }
     public void checkwinner(){
+
         int winner;
         if(this.dealerDefaultWin) {
             //Pay the player and tell them
@@ -165,6 +176,7 @@ public class BlackjackGame extends Deck implements GameInterface {
             System.out.println( "Player1 wins");
         } else if (playerHand.getHandSum() == dealersHand.getHandSum()){
             System.out.println("tie");
+
         } else if (dealersHand.getHandSum() > playerHand.getHandSum()) {
             System.out.println("Dealer wins");
 
@@ -198,13 +210,16 @@ public class BlackjackGame extends Deck implements GameInterface {
 
 
         public void win(PlayerInterface player, int winnings){
+
 //       //collect player winnings
-            //add to account
+//        //add to account
+//    }
+    public void losings(PlayerInterface player, int losings){
+
     }
-        public void losings(PlayerInterface player, int losings){
         //collect losings
-            //deduct from account
-        }
+        //deduct from account
+
 
     public Shoe getShoe() {
         return null;
@@ -221,11 +236,11 @@ public class BlackjackGame extends Deck implements GameInterface {
 
 
 
-            public String toString() {
-                return null;
-            }
+    public String toString() {
+        return null;
+    }
 
-        }
+}
 
 
 
