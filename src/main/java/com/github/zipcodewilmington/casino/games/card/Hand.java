@@ -39,16 +39,18 @@ public class Hand {
         return "Too many cards";
     }
 
-    public int getHandSum () {
-        int handSum = 0;
-        int cardNum;
-        int numAces = 0;
 
-        for (int i = 0; i < this.numOfCards; i++) {
-            cardNum = this.hand.get(i).getValue();
+        public int getHandSum () {
+            int handSum = 0;
+            int cardNum;
+            int numAces = 0;
 
-            if (cardNum == 1) {
-                numAces++;
+            for (int i = 0; i < this.numOfCards; i++) {
+                cardNum = this.hand.get(i).getValue();
+
+                if (cardNum == 1) {
+                    numAces++;
+
 //                    int aceOrEleven = console.getIntegerInput("Enter 1 or 11 for your Ace value");
 //                    if (aceOrEleven == 11){
 //                        handSum += 11;
@@ -61,12 +63,13 @@ public class Hand {
 //                    handSum += 10;
 //                } else {
 //                    handSum += cardNum;
-            } else {
-                handSum += cardNum;
+
+                } else {
+                    handSum += cardNum;
+                }
             }
+            return this.calculateAceValue(handSum, numAces);
         }
-        return this.calculateAceValue(handSum, numAces);
-    }
 
     private int calculateAceValue(int handSum, int numAces) {
         if(numAces > 1){
@@ -75,6 +78,7 @@ public class Hand {
             } else {
                 return handSum + numAces;
             }
+
         } else if(numAces == 1) {
             if(handSum + 11 <= 21){
                 return handSum + 11;
