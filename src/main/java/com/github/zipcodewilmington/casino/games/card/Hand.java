@@ -48,29 +48,45 @@ public class Hand {
                 cardNum = this.hand.get(i).getValue();
 
                 if (cardNum == 1) {
-                    int aceOrEleven = console.getIntegerInput("Enter 1 or 11 for your Ace value");
-                    if (aceOrEleven == 11){
-                        handSum += 11;
-
-                    } else if (aceOrEleven == 1){
-                        handSum += 1;
-                    }
-
-                } else if (cardNum > 10) {
-                    handSum += 10;
+                    numAces++;
+//                    int aceOrEleven = console.getIntegerInput("Enter 1 or 11 for your Ace value");
+//                    if (aceOrEleven == 11){
+//                        handSum += 11;
+//
+//                    } else if (aceOrEleven == 1){
+//                        handSum += 1;
+//                    }
+//
+//                } else if (cardNum > 10) {
+//                    handSum += 10;
+//                } else {
+//                    handSum += cardNum;
                 } else {
                     handSum += cardNum;
                 }
             }
-//            while (handSum > 21) {
-//                handSum -= 10;
-//                numAces--;
-//            }
-            System.out.println(handSum);
-            return handSum;
+            return this.calculateAceValue(handSum, numAces);
         }
 
-        public void printHand( boolean showFirstCard){
+    private int calculateAceValue(int handSum, int numAces) {
+        if(numAces > 1){
+            if(handSum + 11 + (numAces - 1) <= 21){
+                return handSum + 11 + (numAces - 1);
+            } else {
+                return handSum + numAces;
+            }
+        } else if(numAces == 1) {
+            if(handSum + 11 <= 21){
+                return handSum + 11;
+            } else {
+                return handSum + 1;
+            }
+        } else {
+            return handSum;
+        }
+    }
+
+    public void printHand( boolean showFirstCard){
 //            System.out.println("%'s cards :\n", this.name);
             for (int i = 0; i < this.numOfCards; i++) {
                 if (i == 0 && !showFirstCard) {
