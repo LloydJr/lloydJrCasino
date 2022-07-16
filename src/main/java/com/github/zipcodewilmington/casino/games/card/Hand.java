@@ -1,11 +1,15 @@
 package com.github.zipcodewilmington.casino.games.card;
 
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private ArrayList<Card> hand = new ArrayList<>();
     private int numOfCards;
+    private final IOConsole console = new IOConsole(AnsiColor.AUTO);
 
     public Hand() {
 
@@ -22,6 +26,7 @@ public class Hand {
         if (this.numOfCards < 10) {
 
             this.hand.add(aCard);
+            numOfCards++;
         } else {
             System.out.println(this.printHandLimitMessage());
         }
@@ -44,21 +49,44 @@ public class Hand {
 
                 if (cardNum == 1) {
                     numAces++;
-                    handSum += 11;
-                } else if (cardNum > 10) {
-                    handSum += 10;
+//                    int aceOrEleven = console.getIntegerInput("Enter 1 or 11 for your Ace value");
+//                    if (aceOrEleven == 11){
+//                        handSum += 11;
+//
+//                    } else if (aceOrEleven == 1){
+//                        handSum += 1;
+//                    }
+//
+//                } else if (cardNum > 10) {
+//                    handSum += 10;
+//                } else {
+//                    handSum += cardNum;
                 } else {
                     handSum += cardNum;
                 }
             }
-            while (handSum > 21 && numAces > 0) {
-                handSum -= 10;
-                numAces--;
-            }
-            return handSum;
+            return this.calculateAceValue(handSum, numAces);
         }
 
-        public void printHand( boolean showFirstCard){
+    private int calculateAceValue(int handSum, int numAces) {
+        if(numAces > 1){
+            if(handSum + 11 + (numAces - 1) <= 21){
+                return handSum + 11 + (numAces - 1);
+            } else {
+                return handSum + numAces;
+            }
+        } else if(numAces == 1) {
+            if(handSum + 11 <= 21){
+                return handSum + 11;
+            } else {
+                return handSum + 1;
+            }
+        } else {
+            return handSum;
+        }
+    }
+
+    public void printHand( boolean showFirstCard){
 //            System.out.println("%'s cards :\n", this.name);
             for (int i = 0; i < this.numOfCards; i++) {
                 if (i == 0 && !showFirstCard) {

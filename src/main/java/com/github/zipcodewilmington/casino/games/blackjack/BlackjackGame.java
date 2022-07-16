@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class BlackjackGame extends Deck implements GameInterface {
 
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RED = "\u001B[31m";
     private Hand dealersHand = new Hand();
     private Hand playerHand = new Hand();
     private Shoe shoe = new Shoe();
@@ -23,7 +25,7 @@ public class BlackjackGame extends Deck implements GameInterface {
 
     private final IOConsole console = new IOConsole(AnsiColor.AUTO);
     public LinkedList<BlackjackPlayer> blackjackPlayer = new LinkedList<>();
-
+    private boolean dealerWin;
 
 
     public void add(PlayerInterface player) {
@@ -33,13 +35,15 @@ public class BlackjackGame extends Deck implements GameInterface {
 
     public void  run(){
         this.initializeNewGame();
-
+        checkDealerWinDefault();
         while(this.isRunning == true){
-            System.out.println("Successfully started game");
+            System.out.println(ANSI_YELLOW  + "Successfully started game");
+
 //            this.setBet();
             this.advanceTurn();
-            this.isRunning = false;
         }
+
+        this.checkwinner();
 
 //        this.determineWinner();
 //        System.out.println((this.printEndingMessage()));
@@ -47,28 +51,36 @@ public class BlackjackGame extends Deck implements GameInterface {
     }
 
     private void advanceTurn() {
-        if(this.dealersTurn){
-            checkDealerWinDefault();
 
+        if(this.dealersTurn){
+
+            System.out.println(this.dealersHand.toString());
+            this.checkDealer();
         } else {
             //player's code
-            console.println("Player's Turn. Current Hand:");
-            System.out.println(this.playerHand.toString());
-            if(this.console.getIntegerInput("Please enter your choice\n1: Hit\n2: Stand") == 1){
-                this.playerHand.addCard(shoe.drawNext());
-                System.out.println("Added card");
+            Integer userInput = 0;
+            while(userInput != 2 && this.isRunning){
+                console.println("Player's Turn. Current Hand:");
                 System.out.println(this.playerHand.toString());
-                this.console.getIntegerInput("Please enter your choice\n1: Hit\n2: Stand");
+                System.out.println("Hand value: " + playerHand.getHandSum() + "\n");
+                userInput = this.console.getIntegerInput("Please enter your choice\n1: Hit\n2: Stand");
+                if(userInput == 1){
+                    this.playerHand.addCard(shoe.drawNext());
+                    System.out.println("Added card");
 
-//                this.busted();
-            } else if (this.console.getIntegerInput("Please enter your choice\n1: Hit\n2: Stand") == 2){
-                this.dealersTurn = true;
-                console.println("Dealers Turn. Current Hand:");
-                System.out.println(this.dealersHand.toString());
-
-
-
-
+                    this.busted();
+                } else if (userInput == 2) {
+                    System.out.println("_______Player = 2--------");
+                    this.dealersTurn = true;
+                    console.println("Dealers Turn. Current Hand:");
+                    System.out.println(this.dealersHand.toString());
+                    System.out.println("-----___display dealer hand__ just ran-----");
+                    System.out.println("Dealer has: " + this.dealersHand.getHandSum());
+                    this.checkDealer();
+                    System.out.println("---");
+                    System.out.println("-------End of round-----");
+                    this.isRunning = false;
+                }
                 //if something stand related needs to happen, set up here?
 //                System.out.println("chose to stand");
             }
@@ -77,20 +89,23 @@ public class BlackjackGame extends Deck implements GameInterface {
         this.dealersTurn = !this.dealersTurn;
     }
 
+
+
     public void initializeNewGame() {
         this.initializeHands();
         this.dealInitialHands();
-        this.checkDealerWinDefault();
-        this.isRunning = true;
+        this.isRunning = !this.checkDealerWinDefault();
 
     }
 
-    private void checkDealerWinDefault() {
-        this.dealerDefaultWin = false;
+    private Boolean checkDealerWinDefault() {
+        Boolean dealerDefaultWin = false;
 
         if(this.dealersHand.getCards().get(0).getRank().getRankName().equals("Ace")){
-            this.dealerDefaultWin = this.dealersHand.getCards().get(1).getRank().getRankValue() == 10;
+            dealerDefaultWin = this.dealersHand.getCards().get(1).getRank().getRankValue() == 10;
         }
+        this.dealerDefaultWin = dealerDefaultWin;
+        return dealerDefaultWin;
     }
 
     private void dealInitialHands() {
@@ -108,11 +123,15 @@ public class BlackjackGame extends Deck implements GameInterface {
         this.playerHand = new Hand();
     }
 
-//    public void busted(){
-//        if(this.playerHand.getHandSum() > 21){
-//            System.out.println("you went over 21, and lost your bet ");
-//            isRunning = false;
-//    }
+    public void busted() {
+        if (this.playerHand.getHandSum() > 21) {
+            System.out.println("you went over 21, and lost your bet ");
+            System.out.println(this.playerHand.toString());
+            this.dealerWin = true;
+            this.isRunning = false;
+        }
+    }
+
 
     public String printEndingMessage() {
         return "Game Over";
@@ -121,39 +140,61 @@ public class BlackjackGame extends Deck implements GameInterface {
     public void blackjack(){
     }
 
-    public Scanner setBet(){
-
-        int bet;
-        String input = console.getStringInput("Minimum bet is $5!");
-        Scanner userInput = new Scanner(System.in);
-        userInput.nextDouble();
-        if (userInput.nextDouble() < 5){
-            System.out.println("You must bet $5 or more");
-        } else if (userInput.nextDouble() > 5) {
-            System.out.println("You bet " + userInput);
+//    public Scanner setBet(){
+//
+//        int bet;
+//        String input = console.getStringInput("Minimum bet is $5!");
+//        Scanner userInput = new Scanner(System.in);
+//        while (userInput.nextDouble() > 5) {
+//            System.out.println("You must bet $5 or more");
+//        } if {(userInput.nextDouble() > 5) {
+//            System.out.println("You bet " + userInput);
+//        }
+//
+//        }
+//        return userInput;
+//
+//
+//    }
+    public void checkwinner(){
+        int winner;
+        if(this.dealerDefaultWin) {
+            //Pay the player and tell them
+            System.out.println("Dealer won by default");
+        } else if(playerHand.getHandSum() > dealersHand.getHandSum()){
+            System.out.println( "Player1 wins");
+        } else if (playerHand.getHandSum() == dealersHand.getHandSum()){
+            System.out.println("tie");
+        } else if (dealersHand.getHandSum() > playerHand.getHandSum()) {
+            System.out.println("Dealer wins");
 
         }
-        return userInput;
-
-
     }
 
-    public void betOption(){
-       // Scanner userInput = new Scanner(System.in);
-       // if ( i!= 21) {
-         //   System.out.println("Would you like to Hit or Stand?");
-           // userInput.nextLine();
-        //if (userInput == Hit){
-          //  draw();
-        //} else {
+    public void checkDealer() {
+//        console.println("Dealers Turn. Current Hand:");
 
-       // }
+        while (dealersHand.getHandSum() < 17) {
+            System.out.println("------HAND IS LESS THAN 17-------");
+            if (dealersHand.getHandSum() < 17) {
+                System.out.println("dealer must hit");
+                dealersHand.addCard(shoe.drawNext());
+                System.out.println(dealersHand.toString());
+                System.out.println("_____dealers hand ran_____\n next is 18-20");
+            } else if (dealersHand.getHandSum() < 21 && dealersHand.getHandSum() > 17) {
+                System.out.println("Dealer has " + dealersHand.getHandSum());
+//                break;
+//            give player choice to pay again && pay the player
+            } else if (dealersHand.getHandSum() == playerHand.getHandSum()) {
+                System.out.println("Tie");
+//            replay game method here
+            } else if (dealersHand.getHandSum() > playerHand.getHandSum()) {
+                console.println("Dealers Turn. Current Hand:");
+                System.out.println(this.dealersHand.toString());
 
-
-      //  }
-
+            }
+        }
     }
-
 
 
         public void win(PlayerInterface player, int winnings){
