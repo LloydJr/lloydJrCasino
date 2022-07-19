@@ -24,9 +24,5 @@ public interface PlayerInterface {
      */
     <SomeReturnType> SomeReturnType play();
 
-    void Garbage();
-    void CasinoAccount();
-    void setBet();
-    void cashIn();
-    void cashOut();
+
 }

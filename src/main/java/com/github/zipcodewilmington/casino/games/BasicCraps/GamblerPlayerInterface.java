@@ -8,7 +8,6 @@ public interface GamblerPlayerInterface {
 
     CasinoAccount getArcadeAccount();
 
-    public void CasinoAccount();
 
 
 }

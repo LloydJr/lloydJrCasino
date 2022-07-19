@@ -4,9 +4,9 @@ import com.github.zipcodewilmington.casino.PlayerInterface;
 
 public interface GamblerGameInterface {
 
-    void add(PlayerInterface player);
+    void add(GamblerPlayerInterface player);
 
-    void remove(PlayerInterface player);
+    void remove(GamblerPlayerInterface player);
 
     void run();
 

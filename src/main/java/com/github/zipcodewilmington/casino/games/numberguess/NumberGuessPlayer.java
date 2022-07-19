@@ -34,28 +34,5 @@ public class NumberGuessPlayer extends CasinoAccountManager implements PlayerInt
         return null;
     }
 
-    @Override
-    public void Garbage() {
 
-    }
-
-    @Override
-    public void CasinoAccount() {
-
-    }
-
-    @Override
-    public void setBet() {
-
-    }
-
-    @Override
-    public void cashIn() {
-
-    }
-
-    @Override
-    public void cashOut() {
-
-    }
 }

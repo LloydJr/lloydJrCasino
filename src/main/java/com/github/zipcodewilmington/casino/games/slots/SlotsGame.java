@@ -1,10 +1,9 @@
 package com.github.zipcodewilmington.casino.games.slots;
 
 import com.github.zipcodewilmington.Casino;
-import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
-import com.github.zipcodewilmington.casino.GameInterface;
-import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.games.BasicCraps.GamblerGameInterface;
+import com.github.zipcodewilmington.casino.games.BasicCraps.GamblerPlayerInterface;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
@@ -16,23 +15,25 @@ import java.util.List;
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsGame extends CasinoAccountManager implements GameInterface {
+public class SlotsGame extends CasinoAccountManager implements GamblerGameInterface {
 
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
     private final IOConsole consoleASCII = new IOConsole(AnsiColor.BLUE);
-    public List<PlayerInterface> gambler = new ArrayList<>();
-    public List<PlayerInterface> leaveGame = new ArrayList<>();
+    public List<GamblerPlayerInterface> gambler = new ArrayList<>();
     private Integer balance;
-    @Override
-    public void add(PlayerInterface player) {
 
+
+
+
+    @Override
+    public void add(GamblerPlayerInterface player) {
         player.getArcadeAccount();
         this.balance = player.getArcadeAccount().getBalance();
         gambler.add(player);
     }
 
     @Override
-    public void remove(PlayerInterface player) {
+    public void remove(GamblerPlayerInterface player) {
         gambler.get(0).getArcadeAccount().setBalance(this.balance);
         Casino c = new Casino(player);
         c.run();
@@ -70,7 +71,7 @@ public class SlotsGame extends CasinoAccountManager implements GameInterface {
         }
     }
 
-    public void slots(PlayerInterface player) {
+    public void slots(GamblerPlayerInterface player) {
         int[] lever = Lever.PullLever();
 
         String result = getResult(lever);
@@ -100,7 +101,7 @@ public class SlotsGame extends CasinoAccountManager implements GameInterface {
         else return "bongo";
     }
 
-    public int setBet(PlayerInterface player) {
+    public int setBet(GamblerPlayerInterface player) {
         String input = console.getStringInput("Input $1 to play!");
         if (input.equals("1")) {
             int balance = player.getArcadeAccount().getBalance();
@@ -114,7 +115,7 @@ public class SlotsGame extends CasinoAccountManager implements GameInterface {
         else return 0;
     }
 
-    public void win(PlayerInterface player, int winnings) {
+    public void win(GamblerPlayerInterface player, int winnings) {
         int balance = player.getArcadeAccount().getBalance();
         this.balance = balance + winnings;
         player.getArcadeAccount().setBalance(this.balance);
@@ -123,7 +124,7 @@ public class SlotsGame extends CasinoAccountManager implements GameInterface {
                 "Your new balance is " + player.getArcadeAccount().getBalance());
     }
 
-    public void lose(PlayerInterface player) {
+    public void lose(GamblerPlayerInterface player) {
         System.out.println("Better luck next time. \n" +
                 "Your new balance is " + player.getArcadeAccount().getBalance());
     }
@@ -194,53 +195,5 @@ public class SlotsGame extends CasinoAccountManager implements GameInterface {
                 Thread.sleep(1000);
     }
 
-    @Override
-    public void bet() {
 
-    }
-
-    @Override
-    public void continueGambling() {
-
-    }
-
-    @Override
-    public void lose() {
-
-    }
-
-    @Override
-    public void outcome() {
-
-    }
-
-    @Override
-    public void bonus() {
-
-    }
-
-    @Override
-    public void enterGame() {
-
-    }
-
-    @Override
-    public void kickout() {
-
-    }
-
-    @Override
-    public void account() {
-
-    }
-
-    @Override
-    public void moneyCheck() {
-
-    }
-
-    @Override
-    public void music() {
-
-    }
 }

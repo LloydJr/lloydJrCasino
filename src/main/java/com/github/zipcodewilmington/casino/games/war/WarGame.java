@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.war;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
@@ -12,6 +13,7 @@ import com.github.zipcodewilmington.utils.IOConsole;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class WarGame extends CasinoAccountManager implements GameInterface {
 
@@ -20,6 +22,7 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
     public ArrayDeque<Card> dealerHand = new ArrayDeque<>();
     public ArrayDeque<Card> playerHand = new ArrayDeque<>();
     public ArrayDeque<Card> fieldDeck = new ArrayDeque<>();
+    public List<PlayerInterface> player = new ArrayList<>();
 
     public ArrayList<Card> makeWarDeck () {
         Deck deck = new Deck();
@@ -74,6 +77,7 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
         int playerC = rankPlayer.getRankValue();
 
         if (dealerC>playerC) {
+            tankPrint();
             dealerHand.addLast(dealerCard);
             dealerHand.addLast(playerCard);
             collectCardsInField(dealerHand);
@@ -84,6 +88,7 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
             System.out.println("Player has " + playerHand.size()+ " cards.\n");
 
         } else if (dealerC<playerC) {
+            tankPrint();
             playerHand.addLast(playerCard);
             playerHand.addLast(dealerCard);
             collectCardsInField(playerHand);
@@ -112,6 +117,7 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
 
     @Override
     public void run() {
+        printTitle();
         System.out.println("Welcome to the game of War. Let's begin.\n");
         ArrayDeque<Card> deckRdy = readyToUseWarDeck();
         splitDeck(deckRdy);
@@ -123,7 +129,7 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
                 Card dealerC = dealerHand.removeFirst();
                 compareValueAndAdd(playerC,dealerC);
             } else if (flip.equals("j")) {
-                break;
+                remove(this.player.get(0));
             }
 
         }
@@ -142,61 +148,46 @@ public class WarGame extends CasinoAccountManager implements GameInterface {
     public void add(PlayerInterface player) {
         player.getArcadeAccount();
         this.balance = player.getArcadeAccount().getBalance();
-        System.out.println("Starting balance is " + this.balance);
+        this.player.add(player);
 
     }
 
     @Override
     public void remove(PlayerInterface player) {
+        this.player.get(0).getArcadeAccount().setBalance(this.balance);
+        Casino c = new Casino(player);
+        c.run();
     }
 
-    @Override
-    public void bet() {
-
+    public void tankPrint() {
+        console.print("\n" +
+                "\n" +
+                "░░░░░░░░( •̪●)░░░░░░░░░░░░░░░░░░░░░░░░░\n" +
+                "░░░░░░███████ ]▄▄▄▄▄▄▄▄▃░░░▃░░░░ ▃░░\n" +
+                "▂▄▅█████████▅▄▃▂░░░░░░░░░░░░░░░░░\n" +
+                "I███████████████████].░░░░░░░░░░░░░░\n" +
+                "◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲⊙◤...░░░░░░░░░░░░░░\n");
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public void continueGambling() {
-
+    public void printTitle(){
+        console.print(" _    _  ___  ______ \n" +
+                "| |  | |/ _ \\ | ___ \\\n" +
+                "| |  | / /_\\ \\| |_/ /\n" +
+                "| |/\\| |  _  ||    / \n" +
+                "\\  /\\  / | | || |\\ \\ \n" +
+                " \\/  \\/\\_| |_/\\_| \\_|\n" +
+                "                     \n");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public void lose() {
 
-    }
-
-    @Override
-    public void outcome() {
-
-    }
-
-    @Override
-    public void bonus() {
-
-    }
-
-    @Override
-    public void enterGame() {
-
-    }
-
-    @Override
-    public void kickout() {
-
-    }
-
-    @Override
-    public void account() {
-
-    }
-
-    @Override
-    public void moneyCheck() {
-
-    }
-
-    @Override
-    public void music() {
-
-    }
 }
