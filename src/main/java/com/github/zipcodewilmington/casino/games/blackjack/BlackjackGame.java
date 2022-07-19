@@ -296,7 +296,7 @@ public class BlackjackGame extends Deck implements GamblerGameInterface {
     }
 
     public void winMoney(Integer winnings) {
-        this.gambler.get(0).getArcadeAccount().setBalance(this.balance + winnings);
+        this.gambler.get(0).getArcadeAccount().setBalance(this.balance + (2*this.setBet));
     }
 
     public void setBet() {
