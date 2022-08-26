@@ -3,6 +3,7 @@ package com.github.zipcodewilmington.casino.games.slots;
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.games.BasicCraps.GamblerPlayerInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,8 @@ import java.util.List;
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsPlayer extends CasinoAccountManager implements PlayerInterface {
+public class SlotsPlayer extends CasinoAccountManager implements GamblerPlayerInterface {
 
-    List<CasinoAccount> holdPlayer = new ArrayList<>();
     Object casinoAccount;
 
     Integer balance;
@@ -31,34 +31,7 @@ public class SlotsPlayer extends CasinoAccountManager implements PlayerInterface
         return (CasinoAccount) this.casinoAccount;
     }
 
-    @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
-    }
 
-    @Override
-    public void Garbage() {
 
-    }
 
-    @Override
-    public void CasinoAccount() {
-        this.getArcadeAccount();
-
-    }
-
-    @Override
-    public void setBet() {
-
-    }
-
-    @Override
-    public void cashIn() {
-
-    }
-
-    @Override
-    public void cashOut() {
-
-    }
 }

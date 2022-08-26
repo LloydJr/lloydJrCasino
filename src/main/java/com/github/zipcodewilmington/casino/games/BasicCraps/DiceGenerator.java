@@ -2,7 +2,7 @@ package com.github.zipcodewilmington.casino.games.BasicCraps;
 
 import java.util.Random;
 
-public abstract class DiceGenerator {
+public class DiceGenerator {
     Random rand = new Random();
 
     public Integer diceRoll(){

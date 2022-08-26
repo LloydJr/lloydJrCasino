@@ -21,8 +21,5 @@ public class CrapsPlayer implements GamblerPlayerInterface{
         return (CasinoAccount) this.casinoAccount;
     }
 
-    @Override
-    public void CasinoAccount() {
 
-    }
 }

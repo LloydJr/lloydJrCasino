@@ -15,19 +15,12 @@ abstract class Lever {
         slot3 = random.nextInt(9) + 1;
         pulled[2] = slot3;
 
-        System.out.println("Pulling lever now\n" +
-                "\uD83D\uDCB0" +"\uD83D\uDCB0" + "\uD83D\uDCB0 \n" +
-                "\uD83D\uDCB0" +"\uD83D\uDCB0" + "\uD83D\uDCB0 \n" +
-                "\uD83D\uDCB0" +"\uD83D\uDCB0" + "\uD83D\uDCB0 \n" +
-                "\n" +
+        System.out.println("Pulling lever now!\n" +
+                "\u23F3" + "\u231B" + "\u23F3" + "\n" +
+                "\u23F3" + "\u231B" + "\u23F3" + "\n" +
+                "\u23F3" + "\u231B" + "\u23F3" + "\n" +
                 pulled[0] + "  " + pulled[1] + "  " + pulled[2]);
 
         return pulled;
-    }
-
-    public String unicode(int slotNumber) {
-        if (slotNumber == 9) return "\uD83C\uDF52";
-        else if (slotNumber == 7) return "\uD835\uDFD5";
-        else return null;
     }
 }

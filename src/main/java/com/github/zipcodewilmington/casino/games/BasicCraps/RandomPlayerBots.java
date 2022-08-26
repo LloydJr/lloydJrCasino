@@ -30,14 +30,13 @@ public abstract class RandomPlayerBots {
 
     }
 
-    public Integer getPool7Or11Bets(){
-       return this.pool7Or11Bets;
+    public Integer getPoolBets() {
+        return this.randomBetsBot1 + this.randomBetsBot2 + this.randomBetsBot3;
     }
 
-    public Integer getPoolSetBets(){
-        return this.randomBetsBot4 + this.randomBetsBot5 + this.randomBetsBot6;
+    public Integer getPoolSetBets() {
+        return this.randomBetsBot4 + this.randomBetsBot5 + randomBetsBot6;
     }
-
 
 
 

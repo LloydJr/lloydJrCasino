@@ -10,7 +10,7 @@ import com.github.zipcodewilmington.casino.games.card.Suit;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Deck implements GameInterface {
+public class Deck  {
     private ArrayList<Card> deck = new ArrayList<>();
     private Deck comingFrom;
     private Card addCard;
@@ -70,70 +70,7 @@ public class Deck implements GameInterface {
 
 
 
-    @Override
-    public void add(PlayerInterface player) {
 
-    }
-
-    @Override
-    public void remove(PlayerInterface player) {
-
-    }
-
-    @Override
-    public void run() {
-
-    }
-
-    @Override
-    public void bet() {
-
-    }
-
-    @Override
-    public void continueGambling() {
-
-    }
-
-    @Override
-    public void lose() {
-
-    }
-
-    @Override
-    public void outcome() {
-
-    }
-
-    @Override
-    public void bonus() {
-
-    }
-
-    @Override
-    public void enterGame() {
-
-    }
-
-    @Override
-    public void kickout() {
-
-    }
-
-    @Override
-    public void account() {
-
-    }
-
-    @Override
-    public void moneyCheck() {
-
-    }
-
-    @Override
-    public void music() {
-
-    }
 
     public ArrayList<Card> getDeck() {
         return deck;

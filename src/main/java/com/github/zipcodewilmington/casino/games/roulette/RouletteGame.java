@@ -4,13 +4,15 @@ import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.games.BasicCraps.GamblerGameInterface;
+import com.github.zipcodewilmington.casino.games.BasicCraps.GamblerPlayerInterface;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RouletteGame extends CasinoAccountManager implements GameInterface {
+public class RouletteGame extends CasinoAccountManager implements GamblerGameInterface {
 
     int bet;
     int betOption;
@@ -19,8 +21,7 @@ public class RouletteGame extends CasinoAccountManager implements GameInterface 
 
     int money = 1000;
     int roundCounter = 1;
-    public List<PlayerInterface> gambler = new ArrayList<>();
-    public List<PlayerInterface> leaveGame = new ArrayList<>();
+    public List<GamblerPlayerInterface> gambler = new ArrayList<>();
 
     public Integer balance;
     BallNumberGenerator gen = new BallNumberGenerator();
@@ -28,19 +29,20 @@ public class RouletteGame extends CasinoAccountManager implements GameInterface 
     private final IOConsole console = new IOConsole(AnsiColor.RED);
     private final IOConsole consoleASCII = new IOConsole(AnsiColor.GREEN);
 
-    public LinkedList<RoulettePlayer> roulettePlayers = new LinkedList<>();
+
+
 
 
     @Override
-    public void add(PlayerInterface player) {
+    public void add(GamblerPlayerInterface player) {
         player.getArcadeAccount();
         this.balance = player.getArcadeAccount().getBalance();
-        gambler.add(player);
+        this.gambler.add(player);
     }
 
     @Override
-    public void remove(PlayerInterface player) {
-        gambler.get(0).getArcadeAccount().setBalance(this.balance);
+    public void remove(GamblerPlayerInterface player) {
+        this.gambler.get(0).getArcadeAccount().setBalance(this.balance);
         Casino c = new Casino(player);
         c.run();
     }
@@ -108,55 +110,7 @@ public class RouletteGame extends CasinoAccountManager implements GameInterface 
 
     }
 
-    @Override
-    public void bet() {
 
-    }
-
-    @Override
-    public void continueGambling() {
-
-    }
-
-    @Override
-    public void lose() {
-
-    }
-
-    @Override
-    public void outcome() {
-
-    }
-
-    @Override
-    public void bonus() {
-
-    }
-
-    @Override
-    public void enterGame() {
-
-    }
-
-    @Override
-    public void kickout() {
-
-    }
-
-    @Override
-    public void account() {
-
-    }
-
-    @Override
-    public void moneyCheck() {
-
-    }
-
-    @Override
-    public void music() {
-
-    }
 
     public void printSummary() {
         System.out.println("Below is the pay out of your desired option.");
